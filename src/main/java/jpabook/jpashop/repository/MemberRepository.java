@@ -1,6 +1,7 @@
 package jpabook.jpashop.repository;
 
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,10 +9,11 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository // 데이터 접근 계층 (DAO)
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext // 스프링에서 해당 객체를 EntityManager로 inject
-    private EntityManager em;
+//    @PersistenceContext 스프링에서 해당 객체를 EntityManager로 inject
+    private final EntityManager em;
 
     public void save(Member member){
         em.persist(member);
