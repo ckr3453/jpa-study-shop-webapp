@@ -17,6 +17,9 @@ public class ItemRepository {
         if(item.getId() == null){
             em.persist(item);
         } else {
+            // 병합 방식
+            // item은 영속성 컨텍스트로 관리되지 않고 반환되는 객체가 관리됨.
+            // 모든 속성이 덮어쓰기됨. (일부 필드가 null 일 경우 null 로 전부 업데이트 됨)
             em.merge(item);
         }
     }
