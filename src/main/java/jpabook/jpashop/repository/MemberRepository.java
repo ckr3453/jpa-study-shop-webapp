@@ -1,11 +1,10 @@
 package jpabook.jpashop.repository;
 
-import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository // 데이터 접근 계층 (DAO)

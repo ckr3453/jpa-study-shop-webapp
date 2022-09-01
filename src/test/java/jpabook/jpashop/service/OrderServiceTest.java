@@ -1,8 +1,8 @@
 package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.entity.Member;
+import jpabook.jpashop.domain.entity.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
@@ -45,14 +45,14 @@ class OrderServiceTest {
         assertEquals(18, book.getStockQuantity(), "주문 수량만큼 재고가 줄어야 한다.");
     }
 
-    private Book createBook(String name, int price, int stockQuantity) {
-        Book book = new Book();
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(stockQuantity);
-        em.persist(book);
-        return book;
-    }
+//    private Book createBook(String name, int price, int stockQuantity) {
+//        Book book = new Book();
+//        book.setName(name);
+//        book.setPrice(price);
+//        book.setStockQuantity(stockQuantity);
+//        em.persist(book);
+//        return book;
+//    }
 
     private Member createMember(String name, String city, String street, String zipcode) {
         Member member = new Member();

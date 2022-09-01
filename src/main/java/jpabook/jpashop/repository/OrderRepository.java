@@ -1,13 +1,12 @@
 package jpabook.jpashop.repository;
 
-import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.entity.Order;
 import jpabook.jpashop.domain.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
-import javax.persistence.JoinTable;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ public class OrderRepository {
     }
 
     /**
-     * @deprecated
      * JPA Criteria 를 활용한 동적쿼리 생성 (JPA 표준이지만 유지보수성이 떨어지고 복잡하여 권장하지 않음)
      */
     public List<Order> findAllByCriteria(OrderSearch orderSearch){
