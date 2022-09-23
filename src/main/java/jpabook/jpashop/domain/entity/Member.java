@@ -1,6 +1,7 @@
 package jpabook.jpashop.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.Address;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class Member {
     @Embedded
     private Address address;
 
-    // 컬렉션 객체는 필드에서 초기화함으로써 NullPointerException 방지 (Best practice)
+    @JsonIgnore // Order 와의 무한루프 방지
     @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>(); // 컬렉션 객체는 필드에서 초기화함으로써 NullPointerException 방지 (Best practice)
 }
