@@ -22,7 +22,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // 지연로딩이기 때문에 해당 객체타입의 프록시 인스턴스를 만들어서 진행함. (ByteBuddyInterceptor)
     @JoinColumn(name = "member_id")
     private Member member;
 
