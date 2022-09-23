@@ -17,10 +17,6 @@ import javax.persistence.EntityManager;
 /**
  * 총 주문 2개
  *
- * * userA
- *  *
- *
- *
  */
 @Component
 @RequiredArgsConstructor
