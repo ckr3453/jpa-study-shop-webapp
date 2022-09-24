@@ -56,6 +56,16 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+    // Good Case : N + 1 문제를 fetch join 으로 최적화 (정확히 이해하고 넘어가야 함.)
+    // 결과적으로 join 쿼리를 통해 단 한번의 실행으로 결과를 가져옴
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDTO> ordersV3(){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        return orders.stream()
+                .map(SimpleOrderDTO::new)
+                .collect(Collectors.toList());
+    }
+
     @Data
     static class SimpleOrderDTO {
         private Long orderId;
