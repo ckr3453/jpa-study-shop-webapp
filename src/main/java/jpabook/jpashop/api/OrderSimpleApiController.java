@@ -5,6 +5,8 @@ import jpabook.jpashop.domain.OrderSearch;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.entity.Order;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDTO;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
+    private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
     // Worst Case : DTO 안쓰고 Entity 로 뽑는 경우
     @GetMapping("/api/v1/simple-orders")
@@ -56,8 +59,9 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
-    // Good Case : N + 1 문제를 fetch join 으로 최적화 (정확히 이해하고 넘어가야 함.)
+    // Good Case : N + 1 문제를 fetch join 으로 최적화 (권장)
     // 결과적으로 join 쿼리를 통해 단 한번의 실행으로 결과를 가져옴
+    // 남은 과제 : entity 를 대상으로 조회하지 않기 (원하지 않는 결과를 쿼리로 같이 조회함)
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDTO> ordersV3(){
         List<Order> orders = orderRepository.findAllWithMemberDelivery();
@@ -65,6 +69,20 @@ public class OrderSimpleApiController {
                 .map(SimpleOrderDTO::new)
                 .collect(Collectors.toList());
     }
+
+    // Good Case : 원하는 결과 를 대상으로 조회
+    // JPQL 대상을 DTO(Repository) 로 설정하여 원하는 결과만 쿼리로 조회
+    // 남은 과제 : 대신 결과가 정해져있기 때문에 공용으로 재사용되기 힘듬 - 이런 최적화용 쿼리를 위한 Repository 를 따로 만들어서 관리
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDTO> ordersV4(){
+        return orderSimpleQueryRepository.findOrderDTOs();
+    }
+
+    // 정리
+    // 엔티티를 직접 사용하지말고 DTO 를 만들어서 활용한다.
+    // 필요하면 fetch join 으로 성능을 최적화 한다. -> 대부분 해결 가능
+    // 그래도 되지 않으면 DTO 로 직접 조회하는 방법을 사용한다.
+    // 최후의 방법은 직접 네이티브 SQL 을 작성한다.
 
     @Data
     static class SimpleOrderDTO {
